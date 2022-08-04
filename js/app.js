@@ -101,43 +101,47 @@ function filterTodo(e) {
 // Function for save in localStorage
 
 function saveLocalTodos(todo) {
+  if (todoInput.value != "") {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+      todos = [];
+    } else {
+      todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    todos.push(todo);
+    console.log(todos);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+}
+
+function getTodos() {
   let todos;
   if (localStorage.getItem("todos") === null) {
     todos = [];
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  todos.push(todo);
-  console.log(todos);
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-function getTodos() {
-  let todos;
-  if (localStorage.getItem("todos") === null) {
-    todos = [[]];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
   todos.forEach(function (todo) {
-    const todoDiv = document.createElement("div");
-    todoDiv.classList.add("todo");
-    // Create li element
-    const newTodo = document.createElement("li");
-    newTodo.innerHTML = todo;
-    newTodo.classList.add("todo-item");
-    todoDiv.appendChild(newTodo);
-    // Create Button
-    const cmpltdBtn = document.createElement("button");
-    cmpltdBtn.innerHTML = `<i class="fas fa-check"></i>`;
-    cmpltdBtn.classList.add("cmpld-btn");
-    todoDiv.appendChild(cmpltdBtn);
-    // Create Button
-    const trashdBtn = document.createElement("button");
-    trashdBtn.innerHTML = `<i class="fas fa-trash"></i>`;
-    trashdBtn.classList.add("trash-btn");
-    todoDiv.appendChild(trashdBtn);
-    todoList.append(todoDiv);
+    if (todo != "") {
+      const todoDiv = document.createElement("div");
+      todoDiv.classList.add("todo");
+      // Create li element
+      const newTodo = document.createElement("li");
+      newTodo.innerHTML = todo;
+      newTodo.classList.add("todo-item");
+      todoDiv.appendChild(newTodo);
+      // Create Button
+      const cmpltdBtn = document.createElement("button");
+      cmpltdBtn.innerHTML = `<i class="fas fa-check"></i>`;
+      cmpltdBtn.classList.add("cmpld-btn");
+      todoDiv.appendChild(cmpltdBtn);
+      // Create Button
+      const trashdBtn = document.createElement("button");
+      trashdBtn.innerHTML = `<i class="fas fa-trash"></i>`;
+      trashdBtn.classList.add("trash-btn");
+      todoDiv.appendChild(trashdBtn);
+      todoList.append(todoDiv);
+    }
   });
 }
 
